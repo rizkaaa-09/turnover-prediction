@@ -143,6 +143,15 @@ if st.button('Train Model'):
     # Menampilkan hasil akurasi
     st.write(f'Akurasi model: {accuracy * 100:.2f}%')
 
+    
+    # Membuat DataFrame untuk X_test dan y_pred
+    results_df = X_test.copy()
+    results_df['y_pred'] = y_pred
+
+    # Menampilkan DataFrame
+    st.subheader('Tabel X_test dan y_pred')
+    st.write(results_df)
+
     # Membuat confusion matrix
     cm = confusion_matrix(y_test, y_pred)
 
