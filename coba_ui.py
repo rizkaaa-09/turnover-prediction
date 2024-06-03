@@ -7,6 +7,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 import matplotlib.pyplot as plt
 import seaborn as sns
 from imblearn.under_sampling import RandomUnderSampler
+from imblearn.over_sampling import SMOTE
 
 # Import data
 data = pd.read_csv('hr_data.csv',
@@ -79,7 +80,7 @@ max_depth = st.selectbox('Pilih max_depth', [1, 5, 10])
 max_features = st.selectbox('Pilih max_features', [2, 5, 10])
 size_test = st.selectbox('Pilih size test', [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9])
 jumlah_data = st.selectbox('Pilih jumlah data', [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300])
-undersample_data = st.selectbox('Apakah ingin undersample data?', ['Yes', 'No'])
+undersample_data = st.selectbox('Apakah ingin undersample / upsample data?', ['Normal Data', 'Undersample','Upsample'])
 
 if jumlah_data == 100:
     data = data.head(100)
@@ -117,9 +118,13 @@ model_hasil = RandomForestClassifier()
 if st.button('Train Model'):
     # Memisahkan fitur dan target
 
-    if undersample_data == 'Yes':
+    if undersample_data == 'Undersample':
         rus = RandomUnderSampler(sampling_strategy=0.5, random_state=42)
         X_res, y_res = rus.fit_resample(data.drop(columns=['Attrition']), data['Attrition'])
+        data = pd.concat([X_res, y_res], axis=1)
+    elif undersample_data == 'Upsample':
+        smote = SMOTE( random_state=42)
+        X_res, y_res = smote.fit_resample(data.drop(columns=['Attrition']), data['Attrition'])
         data = pd.concat([X_res, y_res], axis=1)
     else:
         data = data
