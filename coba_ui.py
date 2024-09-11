@@ -62,7 +62,7 @@ top_15_features = df_formatted[correlation_with_attrition.head(16).index]
 
 
 # Input untuk memilih jumlah fitur
-num_features = st.selectbox('Pilih jumlah fitur', [5, 10, 15, 27])
+num_features = st.selectbox('Pilih jumlah fitur', [5, 10, 15, 35])
 
 # Memilih dataset berdasarkan jumlah fitur
 if num_features == 5:
@@ -71,7 +71,7 @@ if num_features == 10:
     data = top_10_features
 if num_features == 15:
     data = top_15_features    
-if num_features == 27:
+if num_features == 35:
     data = df_formatted
 
 # Input untuk memilih hyperparameter
@@ -294,7 +294,7 @@ if num_features == 10:
     input_df = input_df[top_10_features.columns]
 if num_features == 15:
     input_df = input_df[top_15_features.columns]
-if num_features == 27:
+if num_features == 35:
     input_df = input_df[datainput.columns]
 
 
